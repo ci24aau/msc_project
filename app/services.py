@@ -1,5 +1,6 @@
 from database import users_db, orders_db
-
+import random
+import time
 
 def create_user(user):
 
@@ -20,3 +21,19 @@ def process_order(order):
     return {
         "message": "Order processed successfully"
     }
+
+def process_payment(order):
+
+    time.sleep(1)  # simulate delay
+
+    if random.choice([True, False]):
+        raise Exception("Payment gateway failure")
+
+    return True
+
+
+def call_external_service():
+
+    time.sleep(1)
+
+    raise Exception("External API timeout")
