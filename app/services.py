@@ -3,24 +3,26 @@ import time
 from database import users_db, orders_db
 
 
-# ---------------------------
+# ----------------------------
 # USER CREATION
-# ---------------------------
+# ----------------------------
 def create_user(user):
 
-    time.sleep(0.5)  # simulate database delay
+    # simulate database delay
+    time.sleep(0.5)
 
     users_db[user.user_id] = user
 
     return {"message": "User created successfully"}
 
 
-# ---------------------------
-# PAYMENT SYSTEM (SIMULATED)
-# ---------------------------
+# ----------------------------
+# PAYMENT SYSTEM
+# ----------------------------
 def process_payment(order):
 
-    time.sleep(1)  # simulate network delay
+    # simulate delay (network / payment gateway)
+    time.sleep(1)
 
     # randomly fail
     if random.choice([True, False]):
@@ -29,29 +31,31 @@ def process_payment(order):
     return True
 
 
-# ---------------------------
-# EXTERNAL API (SIMULATED)
-# ---------------------------
-def call_external_service():
+# ----------------------------
+# EXTERNAL API CALL
+# ----------------------------
+def call_external_api():
 
+    # simulate delay
     time.sleep(1)
 
+    # always fail (timeout scenario)
     raise Exception("External API timeout")
 
 
-# ---------------------------
+# ----------------------------
 # ORDER PROCESSING
-# ---------------------------
+# ----------------------------
 def process_order(order):
 
     if order.amount <= 0:
         raise ValueError("Invalid order amount")
 
-    # Step 1: simulate payment
+    # Step 1: payment
     process_payment(order)
 
-    # Step 2: simulate external API call
-    call_external_service()
+    # Step 2: external service
+    call_external_api()
 
     # Step 3: store order
     orders_db[order.order_id] = order
