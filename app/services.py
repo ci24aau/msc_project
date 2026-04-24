@@ -25,7 +25,7 @@ def process_payment(order):
     time.sleep(1)
 
     # randomly fail
-    if random.choice([True, False]):
+    if random.random() < 0.3:   # 30% failure rate
         raise Exception("Payment gateway failure")
 
     return True
@@ -39,8 +39,11 @@ def call_external_api():
     # simulate delay
     time.sleep(1)
 
-    # always fail (timeout scenario)
-    raise Exception("External API timeout")
+    # randomly fail (timeout scenario)
+    if random.random() < 0.4:   # 40% failure rate
+        raise Exception("External API timeout")
+
+    return True
 
 
 # ----------------------------
