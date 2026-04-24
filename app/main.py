@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 import uuid
 
 from app.models import User, Order
@@ -55,7 +55,11 @@ def create_user_api(user: User):
     except Exception as e:
         logger.exception(f"Request {request_id}: Error creating user")
 
-        return {"error": str(e)}
+        # ✅ FIX: return proper HTTP error
+        raise HTTPException(
+            status_code=500,
+            detail=f"User creation failed: {str(e)}"
+        )
 
 
 # ----------------------------
@@ -78,7 +82,11 @@ def process_order_api(order: Order):
     except Exception as e:
         logger.exception(f"Request {request_id}: Order failed")
 
-        return {"error": str(e)}
+        # ✅ FIX: return proper HTTP error
+        raise HTTPException(
+            status_code=500,
+            detail=f"Order processing failed: {str(e)}"
+        )
 
 
 # ----------------------------
@@ -97,7 +105,11 @@ def trigger_error():
     except Exception:
         logger.exception(f"Request {request_id}: Runtime error occurred")
 
-        return {"message": "Runtime error logged"}
+        # ✅ FIX: proper error response
+        raise HTTPException(
+            status_code=500,
+            detail="Runtime error occurred (division by zero)"
+        )
 
 
 # ----------------------------
@@ -116,4 +128,8 @@ def syntax_error():
     except Exception:
         logger.exception(f"Request {request_id}: Syntax error occurred")
 
-        return {"message": "Syntax error logged"}
+        # ✅ FIX: proper error response
+        raise HTTPException(
+            status_code=500,
+            detail="Syntax error occurred"
+        )
