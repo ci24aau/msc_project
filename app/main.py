@@ -55,7 +55,7 @@ def create_user_api(user: User):
     except Exception as e:
         logger.exception(f"Request {request_id}: Error creating user")
 
-        # ✅ FIX: return proper HTTP error
+        # return proper HTTP error
         raise HTTPException(
             status_code=500,
             detail=f"User creation failed: {str(e)}"
@@ -82,7 +82,6 @@ def process_order_api(order: Order):
     except Exception as e:
         logger.exception(f"Request {request_id}: Order failed")
 
-        # ✅ FIX: return proper HTTP error
         raise HTTPException(
             status_code=500,
             detail=f"Order processing failed: {str(e)}"
@@ -105,7 +104,6 @@ def trigger_error():
     except Exception:
         logger.exception(f"Request {request_id}: Runtime error occurred")
 
-        # ✅ FIX: proper error response
         raise HTTPException(
             status_code=500,
             detail="Runtime error occurred (division by zero)"
@@ -125,10 +123,17 @@ def syntax_error():
     try:
         eval("5 + * 2")  # invalid Python syntax
 
-    except Exception:
-        logger.exception(f"Request {request_id}: Syntax error occurred")
 
-        # ✅ FIX: proper error response
+    except Exception as e:
+
+        logger.exception(
+
+            f"Request {request_id}: Order failed",
+
+            error=str(e)
+
+        )
+
         raise HTTPException(
             status_code=500,
             detail="Syntax error occurred"
